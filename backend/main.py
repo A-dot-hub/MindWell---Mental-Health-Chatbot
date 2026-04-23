@@ -38,8 +38,6 @@ SYSTEM_PROMPT = (
 
 
 
-# MODEL_NAME = "phi"
-# OLLAMA_URL = "http://127.0.0.1:11434/v1/chat/completions"
 MODEL_NAME = "llama-3.1-8b-instant"
 
 

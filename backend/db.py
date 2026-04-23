@@ -1,11 +1,14 @@
 from pymongo import MongoClient
+import os
+from dotenv import load_dotenv
 
-MONGO_URI = "mongodb+srv://jayeshdhamal03:jayeshdhamal003@cluster01.k7got.mongodb.net/?retryWrites=true&w=majority&appName=Cluster01"
+load_dotenv()
 
-client = MongoClient(MONGO_URI)
+
+client = MongoClient(os.getenv("MONGO_URI"))
 
 db = client["health_app"]
 
 # Collections
 users_collection = db["users"]
-chat_collection = db["chat_history"]  # ✅ THIS WAS MISSING
+chat_collection = db["chat_history"]  
