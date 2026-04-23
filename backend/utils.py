@@ -5,7 +5,7 @@ import aiosmtplib
 import os
 from dotenv import load_dotenv
 
-load_dotenv()  # Load .env variables
+load_dotenv()  
 
 # OTP Generator
 def generate_otp():
