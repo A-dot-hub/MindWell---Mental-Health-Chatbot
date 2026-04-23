@@ -9,8 +9,6 @@ import time
 import threading
 import os
 
-
-# ✅ Translator (Python 3.13 compatible)
 from deep_translator import GoogleTranslator
 
 app = FastAPI()
@@ -28,13 +26,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ---------------- CONSTANTS ----------------
-
-# SYSTEM_PROMPT = (
-#     "You are a calm, kind, and emotionally supportive mental health assistant. "
-#     "Reply in 2–5 short, empathetic sentences. "
-#     "Do NOT answer technical, political, or unrelated questions."
-# )
 
 SYSTEM_PROMPT = (
     "You are a calm, kind, and emotionally supportive mental health assistant. "
@@ -63,100 +54,6 @@ LANG_CODE_MAP = {
 }
 
 
-
-# ---------------- MODEL WARM-UP ----------------
-
-# def warm_up_model():
-#     try:
-#         payload = {
-#             "model": MODEL_NAME,
-#             "messages": [
-#                 {"role": "system", "content": "You are a mental health assistant."},
-#                 {"role": "user", "content": "Hello"}
-#             ]
-#         }
-#         requests.post(OLLAMA_URL, json=payload, timeout=20)
-#         print("✅ Ollama warmed up")
-#     except Exception as e:
-#         print("⚠️ Warm-up failed:", e)
-
-# threading.Thread(target=warm_up_model, daemon=True).start()
-
-# ---------------- CHAT ROUTE ----------------
-
-# @app.post("/chat")
-# async def chat_endpoint(request: Request):
-#     data = await request.json()
-
-#     user_message = data.get("text", "").strip()
-#     language_code = data.get("language", "en-US")
-#     source_lang = LANG_CODE_MAP.get(language_code, "en")
-
-#     if not user_message:
-#         return {"reply": "I’m here whenever you want to talk 💙"}
-
-#     # 1️⃣ Translate user input → English
-#     user_message_en = user_message
-#     if source_lang != "en":
-#         user_message_en = GoogleTranslator(
-#             source=source_lang,
-#             target="en"
-#         ).translate(user_message)
-
-#     # 2️⃣ Send English to Phi
-#     # payload = {
-#     #     "model": MODEL_NAME,
-#     #     "messages": [
-#     #         {"role": "system", "content": SYSTEM_PROMPT},
-#     #         {"role": "user", "content": user_message_en}
-#     #     ]
-#     # }
-
-#     payload = {
-#     "model": MODEL_NAME,
-#     "messages": [
-#         {"role": "system", "content": SYSTEM_PROMPT},
-#         {"role": "user", "content": user_message_en}
-#     ],
-#     "temperature": 0.4,
-#     "max_tokens": 200
-# }
-
-
-
-#     try:
-#         headers = {
-#             "Authorization": f"Bearer {os.getenv('GROQ_API_KEY')}",
-#             "Content-Type": "application/json"
-#         }
-
-#         response = requests.post(
-#             OLLAMA_URL,
-#             json=payload,
-#             headers=headers,
-#             timeout=30
-#         )
-
-
-#         response.raise_for_status()
-
-#         result = response.json()
-#         bot_reply_en = result["choices"][0]["message"]["content"]
-
-#         # 3️⃣ Translate English → original language
-#         final_reply = bot_reply_en
-#         if source_lang != "en":
-#             final_reply = GoogleTranslator(
-#                 source="en",
-#                 target=source_lang
-#             ).translate(bot_reply_en)
-
-#         return {"reply": final_reply}
-
-#     except Exception as e:
-#         if hasattr(e, "response") and e.response is not None:
-#             print("Groq error body:", e.response.text)
-#         print("Chat error:", e)
 
 @app.post("/chat")
 async def chat_endpoint(request: Request):
