@@ -40,9 +40,7 @@ function UserMenu({ showChatbot, setShowChatbot, onLogout }) {
 
       {menuOpen && (
         <div className="dropdown">
-          {/* <button onClick={() => setShowChatbot(!showChatbot)}>
-            <FiMessageSquare color="#8395eb" /> {showChatbot ? "Disable Chatbot" : "Enable Chatbot"}
-          </button> */}
+          
 
           <button onClick={toggleDarkMode}>
             {darkMode ? <FiSun color="#f6e58d" /> : <FiMoon color="#4834d4" />} {darkMode ? "Light Mode" : "Dark Mode"}
