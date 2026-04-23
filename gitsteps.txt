@@ -1,0 +1,119 @@
+Fetch the latest commits from the remote
+        git fetch origin
+
+
+This downloads all new commits and branches from the remote without changing your working files.
+
+-----------------------------------------------------------------------------------------------------------
+
+step-by-step Git command sequence to push all your changes safely to your repository. I’ll assume your remote is called origin and your branch is main.
+
+1️⃣ Check the current status
+
+     git status
+
+
+This will show which files are changed, untracked, or staged.
+
+2️⃣ Add all changes
+
+      git add .
+
+
+. means add all modified and new files.
+
+3️⃣ Commit your changes
+
+    git commit -m "Your commit message here"
+
+
+Replace "Your commit message here" with a meaningful description.
+
+4️⃣ Pull remote changes first (to avoid errors)
+
+    git pull origin main --rebase
+
+
+This ensures your local branch is up-to-date and avoids conflicts.
+
+5️⃣ Push your changes
+
+    git push origin main
+
+⚠ Notes
+
+If your repo uses master instead of main, replace main with master.
+
+If you get a merge conflict during git pull, Git will tell you which files need manual resolution.
+
+
+------------------------------------------------------------------------------------------------------------
+
+    git log --oneline -5
+
+above command Shows the last 5 commits in your branch.
+
+Your latest commit should appear at the top.
+
+
+
+------------------------------------------------------------------------------------------------------------
+
+if you want to undo all the changes you just staged, committed, and maybe even pushed using the commands above. 
+How you do it depends on how far you want to undo. Let’s go step by step.
+
+Case 1: You have staged/committed changes locally but NOT pushed yet
+
+1️⃣ Undo last commit but keep changes in working directory:
+
+git reset --soft HEAD~1
+
+
+HEAD~1 = undo the last commit
+
+--soft = keeps your changes unstaged so you can edit or recommit
+
+2️⃣ Undo last commit AND discard changes completely:
+
+git reset --hard HEAD~1
+
+
+WARNING: this permanently deletes the last commit and all changes
+
+Case 2: You have already pushed your changes
+
+If you already pushed the commit(s) to remote and want to revert:
+
+1️⃣ Revert last pushed commit safely (without rewriting history):
+
+git revert HEAD
+
+
+This creates a new commit that undoes the changes from the last commit.
+
+Safe for shared repos because it doesn’t rewrite history.
+
+2️⃣ Force reset remote branch (dangerous!)
+
+git reset --hard origin/main
+git push origin main --force
+
+
+This will erase your pushed changes on remote and locally.
+
+Only use if you are sure no one else is working on the branch.
+
+Case 3: You just want to discard all local changes (unstaged, staged, committed)
+git fetch origin
+git reset --hard origin/main
+git clean -fd
+
+
+Resets your branch to exactly match the remote
+
+Deletes untracked files and directories
+
+
+
+
+npm install react-icons
